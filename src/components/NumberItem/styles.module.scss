@@ -1,0 +1,17 @@
+.numberItem {
+  display: block;
+  flex: 1;
+  background-color: #fff;
+  border: 0.5px solid rgba(128, 128, 128, 0.5);
+  transition: background-color 10ms ease;
+}
+
+.compared {
+  background-color: rgb(88, 224, 122);
+  border-color: rgb(10, 168, 49);
+}
+
+.moved {
+  background-color: rgb(240, 108, 47);
+  border-color: rgb(161, 57, 9);
+}

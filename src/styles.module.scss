@@ -1,0 +1,62 @@
+$borderColor: lightgrey;
+
+.app {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+}
+
+.inputs {
+  max-width: 800px;
+  margin: 20px auto 0;
+}
+
+.randomGroup {
+  display: flex;
+  align-items: stretch;
+  padding: 20px;
+  border: 1px solid $borderColor;
+}
+
+.randomButton {
+  margin-left: 20px;
+}
+
+.lengthInput {
+  flex: 1;
+  padding: 4px 12px;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid $borderColor;
+}
+
+.textarea {
+  padding: 6px;
+}
+
+.textButton {
+  display: block;
+  margin: 20px auto 0;
+}
+
+.algorithmSelect {
+  display: block;
+  margin: 20px auto;
+  padding: 6px 16px;
+}
+
+.button {
+  min-width: 100px;
+  padding: 6px 16px;
+}

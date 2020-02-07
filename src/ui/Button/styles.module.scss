@@ -1,0 +1,24 @@
+.button {
+  min-width: 180px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(66, 129, 6);
+  border: 1px solid rgb(40, 78, 3);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(96, 177, 20);
+  }
+
+  &:active {
+    background-color: rgb(56, 100, 15);
+  }
+
+  &:disabled {
+    color: rgb(48, 48, 48);
+    background-color: rgb(204, 209, 199);
+    border-color: rgb(171, 173, 168);
+  }
+}

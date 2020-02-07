@@ -1,1 +1,1 @@
-export const ANIMATION_TIMEOUT = 20;
+export const ANIMATION_TIMEOUT = 10;

@@ -5,6 +5,7 @@ $borderColor: lightgrey;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
@@ -53,10 +54,5 @@ $borderColor: lightgrey;
 .algorithmSelect {
   display: block;
   margin: 20px auto;
-  padding: 6px 16px;
-}
-
-.button {
-  min-width: 100px;
   padding: 6px 16px;
 }

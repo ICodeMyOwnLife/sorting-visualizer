@@ -3,6 +3,7 @@ import clsx from "clsx";
 import SortingBoard from "components/SortingBoard";
 import { algorithms, useAlgorithmSelect, useDataInput } from "./utils";
 import classes from "./styles.module.scss";
+import Button from "ui/Button";
 
 const App = () => {
   const { algorithmIndex, handleChangeAlgorithmIndex } = useAlgorithmSelect();
@@ -22,7 +23,7 @@ const App = () => {
       <div className={classes.container}>
         <SortingBoard
           data={data}
-          dataKey={dataKey}
+          key={dataKey}
           algorithm={algorithms[algorithmIndex].algorithm}
         />
 
@@ -35,12 +36,12 @@ const App = () => {
               value={length}
               onChange={handleChangeLength}
             />
-            <button
+            <Button
               className={clsx(classes.randomButton, classes.button)}
               onClick={generateRandom}
             >
               Generate Random
-            </button>
+            </Button>
           </div>
 
           <div className={classes.textGroup}>
@@ -51,12 +52,12 @@ const App = () => {
               value={dataText}
               onChange={handleChangeDataText}
             ></textarea>
-            <button
+            <Button
               className={clsx(classes.textButton, classes.button)}
               onClick={generateFromText}
             >
               Use
-            </button>
+            </Button>
           </div>
 
           <select

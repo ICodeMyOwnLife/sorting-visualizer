@@ -16,3 +16,25 @@ interface AlgorithmInfo {
   name: string;
   algorithm: SortingAlgorithm;
 }
+
+type SortingStatus =
+  | "Pending"
+  | "Sorting"
+  | "Visualizing"
+  | "Complete"
+  | "Failed";
+
+interface SortingRequest {
+  funcBody: string;
+  list: number[];
+}
+
+type SortingOperation = "Compare" | "Swap";
+
+type SortingActionTuple = [SortingOperation, number, number];
+
+interface SortingResponse {
+  actions: SortingActionTuple[];
+  duration: number;
+  succeed: boolean;
+}

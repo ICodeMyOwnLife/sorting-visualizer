@@ -1,0 +1,35 @@
+@keyframes spin {
+  0% {
+    transform: rotateZ(0);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.wrapper {
+  position: relative;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border-style: solid;
+  border-color: transparent #9b2012;
+  border-width: 3px;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

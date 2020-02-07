@@ -1,57 +1,67 @@
-import { useRef, useCallback, useState, Key, useEffect } from "react";
+import { useRef, useCallback, useState } from "react";
 import { NumberListObject } from "components/NumberList/utils";
+import useWorkerCallback from "hooks/useWorkerCallback";
+import { Operation } from "constants/operations";
+
+const getFuncBody = (func: Function | string) => {
+  const funcStr = func.toString();
+  return funcStr.substring(funcStr.indexOf("{") + 1, funcStr.lastIndexOf("}"));
+};
 
 export const useSortingBoard = ({
   data,
-  dataKey,
   algorithm
 }: {
   data: number[];
-  dataKey: Key;
   algorithm: SortingAlgorithm;
 }) => {
-  const [running, setRunning] = useState(false);
+  const [status, setStatus] = useState<SortingStatus>("Pending");
+  const [sortDuration, setSortDuration] = useState<number>();
+  const [visualizationDuration, setVisualizationDuration] = useState<number>();
   const ref = useRef<NumberListObject>(null);
-  const dataKeyRef = useRef<Key>(dataKey);
+  const sort = useWorkerCallback<SortingRequest, SortingResponse>(
+    "/workers/sorting.js"
+  );
 
   const solve = useCallback(async () => {
-    const currentDataKey = dataKeyRef.current;
-    const list = [...data];
-    const actions: Action[] = [];
-    const compare: CompareFunction = (index1, index2) => {
-      actions.push({ func: ref.current!.compare, index1, index2 });
-      return list[index1] - list[index2];
-    };
-    const swap: SwapFunction = (index1, index2) => {
-      actions.push({ func: ref.current!.swap, index1, index2 });
-      const temp = list[index1];
-      list[index1] = list[index2];
-      list[index2] = temp;
-    };
+    setStatus("Sorting");
+    setSortDuration(undefined);
+    setVisualizationDuration(undefined);
+    const funcBody = getFuncBody(algorithm);
+    const { actions, duration, succeed } = await sort({ list: data, funcBody });
+    setStatus("Visualizing");
+    setSortDuration(duration);
 
-    setRunning(true);
-    algorithm(list, compare, swap);
+    if (!succeed) {
+      return setStatus("Failed");
+    }
 
-    for (const { func, index1, index2 } of actions) {
-      if (currentDataKey === dataKeyRef.current) {
-        await func(index1, index2);
-        console.log(`Call ${func.name}`);
+    const startTime = Date.now();
+
+    for (const [op, index1, index2] of actions) {
+      switch (op) {
+        case "Compare":
+          await ref.current?.compare(index1, index2);
+          break;
+
+        case "Swap":
+          await ref.current?.swap(index1, index2);
+          break;
+
+        default:
+          break;
       }
     }
 
-    setRunning(false);
-  }, [data, algorithm]);
+    setVisualizationDuration(Date.now() - startTime);
+    setStatus("Complete");
+  }, [algorithm, data, sort]);
 
-  useEffect(() => {
-    dataKeyRef.current = dataKey;
-    setRunning(false);
-  }, [dataKey]);
-
-  return { ref, running, solve };
+  return { ref, solve, sortDuration, status, visualizationDuration };
 };
 
 export interface Action {
-  func: AsyncBinaryOperation;
+  op: Operation;
   index1: number;
   index2: number;
 }

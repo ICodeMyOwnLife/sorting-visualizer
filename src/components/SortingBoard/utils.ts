@@ -1,7 +1,6 @@
 import { useRef, useCallback, useState } from "react";
 import { NumberListObject } from "components/NumberList/utils";
 import useWorkerCallback from "hooks/useWorkerCallback";
-import { Operation } from "constants/operations";
 
 const getFuncBody = (func: Function | string) => {
   const funcStr = func.toString();
@@ -38,14 +37,18 @@ export const useSortingBoard = ({
 
     const startTime = Date.now();
 
-    for (const [op, index1, index2] of actions) {
-      switch (op) {
+    for (const [operation, operand1, operand2] of actions) {
+      switch (operation) {
+        case "Assign":
+          await ref.current?.assign(operand1, operand2);
+          break;
+
         case "Compare":
-          await ref.current?.compare(index1, index2);
+          await ref.current?.compare(operand1, operand2);
           break;
 
         case "Swap":
-          await ref.current?.swap(index1, index2);
+          await ref.current?.swap(operand1, operand2);
           break;
 
         default:
@@ -59,9 +62,3 @@ export const useSortingBoard = ({
 
   return { ref, solve, sortDuration, status, visualizationDuration };
 };
-
-export interface Action {
-  op: Operation;
-  index1: number;
-  index2: number;
-}

@@ -15,6 +15,7 @@ self.addEventListener("message", e => {
     "list",
     "compare",
     "swap",
+    "assign",
     funcBody
   ) as SortingAlgorithm;
   const actions: SortingActionTuple[] = [];
@@ -28,8 +29,12 @@ self.addEventListener("message", e => {
     list[index1] = list[index2];
     list[index2] = temp;
   };
+  const assign: AssignFunction = (index, value) => {
+    actions.push(["Assign", index, value]);
+    list[index] = value;
+  };
   const startTime = Date.now();
-  algorithm(list, compare, swap);
+  algorithm(list, compare, swap, assign);
   const succeed = isSorted(list);
   const duration = Date.now() - startTime;
   const response: SortingResponse = { actions, duration, succeed };

@@ -11,7 +11,7 @@ var isSorted = function (list) {
 };
 self.addEventListener("message", function (e) {
     var _a = e.data, funcBody = _a.funcBody, list = _a.list;
-    var algorithm = new Function("list", "compare", "swap", funcBody);
+    var algorithm = new Function("list", "compare", "swap", "assign", funcBody);
     var actions = [];
     var compare = function (index1, index2) {
         actions.push(["Compare", index1, index2]);
@@ -23,8 +23,12 @@ self.addEventListener("message", function (e) {
         list[index1] = list[index2];
         list[index2] = temp;
     };
+    var assign = function (index, value) {
+        actions.push(["Assign", index, value]);
+        list[index] = value;
+    };
     var startTime = Date.now();
-    algorithm(list, compare, swap);
+    algorithm(list, compare, swap, assign);
     var succeed = isSorted(list);
     var duration = Date.now() - startTime;
     var response = { actions: actions, duration: duration, succeed: succeed };

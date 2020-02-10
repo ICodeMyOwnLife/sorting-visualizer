@@ -34,6 +34,15 @@ export const useNumberList = ({
   useImperativeHandle(
     ref,
     () => ({
+      assign: async (index, value) => {
+        setList(prevList =>
+          prevList.map((item, idx) =>
+            idx === index ? { key: Date.now(), value } : item
+          )
+        );
+        console.log("assigned");
+        await refs[index].current?.markChanged();
+      },
       compare: async (index1, index2) => {
         await Promise.all([
           refs[index1].current?.markInspected(),
@@ -64,6 +73,7 @@ export const useNumberList = ({
 };
 
 export interface NumberListObject {
+  assign: (index: number, value: number) => Promise<void>;
   compare: AsyncBinaryOperation;
   swap: AsyncBinaryOperation;
 }

@@ -6,10 +6,13 @@ type CompareFunction = BinaryOperation<number>;
 
 type SwapFunction = BinaryOperation<void>;
 
+type AssignFunction = (index: number, value: number) => void;
+
 type SortingAlgorithm = (
   list: readonly number[],
   compare: CompareFunction,
-  swap: SwapFunction
+  swap: SwapFunction,
+  assign: AssignFunction
 ) => void;
 
 interface AlgorithmInfo {
@@ -29,7 +32,7 @@ interface SortingRequest {
   list: number[];
 }
 
-type SortingOperation = "Compare" | "Swap";
+type SortingOperation = "Compare" | "Swap" | "Assign";
 
 type SortingActionTuple = [SortingOperation, number, number];
 

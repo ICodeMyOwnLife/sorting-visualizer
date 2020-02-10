@@ -33,6 +33,7 @@ export const SortingBoardComponent: FC<BoardProps> = ({ data, algorithm }) => {
         </Button>
       </Spin>
       <p className={classes.results}>
+        {status === "Failed" && <span>FAILED</span>}
         {sortDuration !== undefined && (
           <span>Sort Duration: {sortDuration}</span>
         )}

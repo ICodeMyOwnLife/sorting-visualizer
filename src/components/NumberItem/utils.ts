@@ -1,42 +1,38 @@
 import { useState, useImperativeHandle, Ref } from "react";
 import useTimeoutCallback from "hooks/useTimeoutCallback";
 import { ANIMATION_TIMEOUT } from "constants/common";
-import useIsMounted from "hooks/useIsMounted";
 
 export const useNumberItemRef = ({ ref }: { ref: Ref<NumberItemObject> }) => {
-  const isMounted = useIsMounted();
-  const [compared, setCompared] = useState(false);
-  const [moved, setMoved] = useState(false);
-  const clearComparedOnTimeout = useTimeoutCallback(
-    () => setCompared(false),
+  const [inspected, setInspected] = useState(false);
+  const [changed, setChanged] = useState(false);
+  const clearInspected = useTimeoutCallback(
+    () => setInspected(false),
     ANIMATION_TIMEOUT
   );
-  const clearMovedOnTimeout = useTimeoutCallback(
-    () => setMoved(false),
+  const clearChanged = useTimeoutCallback(
+    () => setChanged(false),
     ANIMATION_TIMEOUT
   );
 
   useImperativeHandle(
     ref,
     () => ({
-      compare: () => {
-        if (!isMounted()) return;
-        setCompared(true);
-        clearComparedOnTimeout();
+      markInspected: async () => {
+        setInspected(true);
+        await clearInspected();
       },
-      move: () => {
-        if (!isMounted()) return;
-        setMoved(true);
-        clearMovedOnTimeout();
+      markChanged: async () => {
+        setChanged(true);
+        await clearChanged();
       }
     }),
-    [clearComparedOnTimeout, clearMovedOnTimeout, isMounted]
+    [clearInspected, clearChanged]
   );
 
-  return { compared, moved };
+  return { inspected, changed };
 };
 
 export interface NumberItemObject {
-  compare: VoidFunction;
-  move: VoidFunction;
+  markChanged: () => Promise<void>;
+  markInspected: () => Promise<void>;
 }

@@ -8,8 +8,6 @@ import {
   Key
 } from "react";
 import { NumberItemObject } from "components/NumberItem/utils";
-import { delay } from "utils/common";
-import { ANIMATION_TIMEOUT } from "constants/common";
 
 export const useNumberList = ({
   initialData,
@@ -37,9 +35,10 @@ export const useNumberList = ({
     ref,
     () => ({
       compare: async (index1, index2) => {
-        refs[index1].current?.compare();
-        refs[index2].current?.compare();
-        await delay(ANIMATION_TIMEOUT);
+        await Promise.all([
+          refs[index1].current?.markInspected(),
+          refs[index2].current?.markInspected()
+        ]);
       },
       swap: async (index1, index2) => {
         setList(prevList =>
@@ -51,9 +50,10 @@ export const useNumberList = ({
               : item
           )
         );
-        refs[index1].current?.move();
-        refs[index2].current?.move();
-        await delay(ANIMATION_TIMEOUT);
+        await Promise.all([
+          refs[index1].current?.markChanged(),
+          refs[index2].current?.markChanged()
+        ]);
       }
     }),
 

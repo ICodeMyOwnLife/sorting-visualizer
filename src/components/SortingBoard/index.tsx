@@ -33,8 +33,10 @@ export const SortingBoardComponent: FC<BoardProps> = ({ data, algorithm }) => {
         </Button>
       </Spin>
       <p className={classes.results}>
-        {sortDuration && <span>Sort Duration: {sortDuration}</span>}
-        {visualizationDuration && (
+        {sortDuration !== undefined && (
+          <span>Sort Duration: {sortDuration}</span>
+        )}
+        {visualizationDuration !== undefined && (
           <span>Visualization Duration: {visualizationDuration}</span>
         )}
       </p>

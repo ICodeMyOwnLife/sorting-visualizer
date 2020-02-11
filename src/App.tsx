@@ -1,12 +1,18 @@
 import React from "react";
 import clsx from "clsx";
 import SortingBoard from "components/SortingBoard";
-import { algorithms, useAlgorithmSelect, useDataInput } from "./utils";
+import { algorithms, useAlgorithm, useDataInput } from "./utils";
 import classes from "./styles.module.scss";
 import Button from "ui/Button";
+import CodeEditor from "components/CodeEditor";
 
 const App = () => {
-  const { algorithmIndex, handleChangeAlgorithmIndex } = useAlgorithmSelect();
+  const {
+    algorithm,
+    algorithmIndex,
+    handleChangeAlgorithm,
+    handleChangeAlgorithmIndex
+  } = useAlgorithm();
   const {
     data,
     dataKey,
@@ -21,11 +27,7 @@ const App = () => {
   return (
     <div className={classes.app}>
       <div className={classes.container}>
-        <SortingBoard
-          data={data}
-          key={dataKey}
-          algorithm={algorithms[algorithmIndex].algorithm}
-        />
+        <SortingBoard data={data} key={dataKey} algorithm={algorithm} />
 
         <div className={classes.inputs}>
           <div className={classes.randomGroup}>
@@ -72,6 +74,13 @@ const App = () => {
               </option>
             ))}
           </select>
+
+          <CodeEditor
+            className={classes.algorithmEditor}
+            onChange={handleChangeAlgorithm}
+            value={algorithm}
+            width="100%"
+          />
         </div>
       </div>
     </div>

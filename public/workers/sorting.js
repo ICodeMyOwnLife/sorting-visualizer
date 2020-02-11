@@ -9,8 +9,13 @@ var isSorted = function (list) {
     }
     return true;
 };
+var getFuncBody = function (func) {
+    var funcStr = func.toString();
+    return funcStr.substring(funcStr.indexOf("{") + 1, funcStr.lastIndexOf("}"));
+};
 self.addEventListener("message", function (e) {
-    var _a = e.data, funcBody = _a.funcBody, list = _a.list;
+    var _a = e.data, func = _a.func, list = _a.list;
+    var funcBody = getFuncBody(func);
     var algorithm = new Function("list", "compare", "swap", "assign", funcBody);
     var actions = [];
     var compare = function (index1, index2) {

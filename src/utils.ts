@@ -1,138 +1,74 @@
 import { useState, ChangeEvent, useCallback, Key } from "react";
+import insertionSort from "algorithms/insertionSort";
+import selectionSort from "algorithms/selectionSort";
+import bubbleSort from "algorithms/bubbleSort";
+import mergeSort from "algorithms/mergeSort";
+import heapSort from "algorithms/heapSort";
+import quickSort from "algorithms/quickSort";
+import shellSort from "algorithms/shellSort";
+import radixSort from "algorithms/radixSort";
+import combSort from "algorithms/combSort";
 
 export const algorithms: AlgorithmInfo[] = [
   {
     name: "Insertion Sort",
-    algorithm: (list, compare, swap) => {
-      for (let i = 1; i < list.length; ++i) {
-        for (let j = i; j > 0 && compare(j, j - 1) < 0; --j) {
-          swap(j, j - 1);
-        }
-      }
-    }
+    algorithm: insertionSort
   },
   {
     name: "Selection Sort",
-    algorithm: (list, compare, swap) => {
-      for (let i = 0; i < list.length - 1; ++i) {
-        let minIndex = i;
-
-        for (let j = i + 1; j < list.length; ++j) {
-          if (compare(j, minIndex) < 0) {
-            minIndex = j;
-          }
-        }
-
-        if (minIndex !== i) {
-          swap(i, minIndex);
-        }
-      }
-    }
+    algorithm: selectionSort
   },
   {
     name: "Bubble Sort",
-    algorithm: (list, compare, swap) => {
-      let lastIndex = list.length;
-
-      do {
-        let swapIndex = 0;
-        for (let i = 1; i < lastIndex; ++i) {
-          if (compare(i - 1, i) > 0) {
-            swap(i - 1, i);
-            swapIndex = i;
-          }
-        }
-        lastIndex = swapIndex;
-      } while (lastIndex > 1);
-    }
+    algorithm: bubbleSort
   },
   {
     name: "Merge Sort",
-    algorithm: (list, compare, _swap, assign) => {
-      const merge = (
-        startIndex: number,
-        middleIndex: number,
-        endIndex: number
-      ) => {
-        const leftArray = list.slice(startIndex, middleIndex + 1);
-        const rightArray = list.slice(middleIndex + 1, endIndex + 1);
-        let leftIndex = 0,
-          rightIndex = 0,
-          index = startIndex;
-
-        for (
-          ;
-          leftIndex < leftArray.length && rightIndex < rightArray.length;
-          ++index
-        ) {
-          compare(leftIndex + startIndex, rightIndex + middleIndex + 1);
-          if (leftArray[leftIndex] < rightArray[rightIndex]) {
-            assign(index, leftArray[leftIndex]);
-            ++leftIndex;
-          } else {
-            assign(index, rightArray[rightIndex]);
-            ++rightIndex;
-          }
-        }
-
-        for (; leftIndex < leftArray.length; ++leftIndex, ++index) {
-          assign(index, leftArray[leftIndex]);
-        }
-
-        for (; rightIndex < rightArray.length; ++rightIndex, ++index) {
-          assign(index, rightArray[rightIndex]);
-        }
-      };
-
-      const mergeSort = (startIndex: number, endIndex: number) => {
-        if (startIndex < endIndex) {
-          const middleIndex = Math.trunc((startIndex + endIndex) / 2);
-          mergeSort(startIndex, middleIndex);
-          mergeSort(middleIndex + 1, endIndex);
-          merge(startIndex, middleIndex, endIndex);
-        }
-      };
-
-      mergeSort(0, list.length - 1);
-    }
+    algorithm: mergeSort
+  },
+  {
+    name: "Heap Sort",
+    algorithm: heapSort
   },
   {
     name: "Quick Sort",
-    algorithm: (list, compare, swap) => {
-      const partition = (startIndex: number, endIndex: number) => {
-        let pivotIndex = startIndex;
-        for (let i = startIndex; i < endIndex; ++i) {
-          if (compare(i, endIndex) < 0) {
-            swap(i, pivotIndex);
-            ++pivotIndex;
-          }
-        }
-        swap(pivotIndex, endIndex);
-        return pivotIndex;
-      };
-
-      const quickSort = (startIndex: number, endIndex: number) => {
-        if (startIndex < endIndex) {
-          const pivotIndex = partition(startIndex, endIndex);
-          quickSort(startIndex, pivotIndex - 1);
-          quickSort(pivotIndex + 1, endIndex);
-        }
-      };
-
-      quickSort(0, list.length - 1);
-    }
+    algorithm: quickSort
+  },
+  {
+    name: "Shell Sort",
+    algorithm: shellSort
+  },
+  {
+    name: "Radix Sort",
+    algorithm: radixSort
+  },
+  {
+    name: "Comb Sort",
+    algorithm: combSort
   }
 ];
 
-export const useAlgorithmSelect = () => {
+export const useAlgorithm = () => {
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
+  const [algorithm, setAlgorithm] = useState(
+    algorithms[algorithmIndex].algorithm.toString()
+  );
+
   const handleChangeAlgorithmIndex = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
-      setAlgorithmIndex(Number(e.target.value));
+      const index = Number(e.target.value);
+      setAlgorithmIndex(index);
+      setAlgorithm(algorithms[index].algorithm.toString());
     },
     []
   );
-  return { algorithmIndex, handleChangeAlgorithmIndex };
+
+  return {
+    algorithm,
+    algorithmIndex,
+    handleChangeAlgorithmIndex,
+    handleChangeAlgorithm: setAlgorithm
+  };
 };
 
 export const useDataInput = () => {

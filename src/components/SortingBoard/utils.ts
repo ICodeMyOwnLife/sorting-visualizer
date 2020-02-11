@@ -2,17 +2,12 @@ import { useRef, useCallback, useState } from "react";
 import { NumberListObject } from "components/NumberList/utils";
 import useWorkerCallback from "hooks/useWorkerCallback";
 
-const getFuncBody = (func: Function | string) => {
-  const funcStr = func.toString();
-  return funcStr.substring(funcStr.indexOf("{") + 1, funcStr.lastIndexOf("}"));
-};
-
 export const useSortingBoard = ({
   data,
   algorithm
 }: {
   data: number[];
-  algorithm: SortingAlgorithm;
+  algorithm: string;
 }) => {
   const [status, setStatus] = useState<SortingStatus>("Pending");
   const [sortDuration, setSortDuration] = useState<number>();
@@ -26,8 +21,10 @@ export const useSortingBoard = ({
     setStatus("Sorting");
     setSortDuration(undefined);
     setVisualizationDuration(undefined);
-    const funcBody = getFuncBody(algorithm);
-    const { actions, duration, succeed } = await sort({ list: data, funcBody });
+    const { actions, duration, succeed } = await sort({
+      list: data,
+      func: algorithm
+    });
     setStatus("Visualizing");
     setSortDuration(duration);
 

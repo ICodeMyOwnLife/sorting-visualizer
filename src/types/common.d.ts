@@ -28,7 +28,7 @@ type SortingStatus =
   | "Failed";
 
 interface SortingRequest {
-  funcBody: string;
+  func: string;
   list: number[];
 }
 
@@ -41,3 +41,5 @@ interface SortingResponse {
   duration: number;
   succeed: boolean;
 }
+
+type OmitFrom<TObject, TKey extends keyof TObject> = Omit<TObject, TKey>;

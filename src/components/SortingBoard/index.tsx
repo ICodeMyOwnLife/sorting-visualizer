@@ -51,5 +51,5 @@ export default SortingBoard;
 
 export interface BoardProps {
   data: number[];
-  algorithm: SortingAlgorithm;
+  algorithm: string;
 }

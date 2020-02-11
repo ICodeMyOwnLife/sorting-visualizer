@@ -9,8 +9,14 @@ const isSorted = (list: number[]) => {
   return true;
 };
 
+const getFuncBody = (func: Function | string) => {
+  const funcStr = func.toString();
+  return funcStr.substring(funcStr.indexOf("{") + 1, funcStr.lastIndexOf("}"));
+};
+
 self.addEventListener("message", e => {
-  const { funcBody, list } = e.data as SortingRequest;
+  const { func, list } = e.data as SortingRequest;
+  const funcBody = getFuncBody(func);
   const algorithm = new Function(
     "list",
     "compare",

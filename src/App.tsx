@@ -1,17 +1,17 @@
-import React from "react";
-import clsx from "clsx";
-import SortingBoard from "components/SortingBoard";
-import { algorithms, useAlgorithm, useDataInput } from "./utils";
-import classes from "./styles.module.scss";
-import Button from "ui/Button";
-import CodeEditor from "components/CodeEditor";
+import React from 'react';
+import clsx from 'clsx';
+import Button from 'ui/Button';
+import SortingBoard from 'components/SortingBoard';
+import CodeEditor from 'components/CodeEditor';
+import { algorithms, useAlgorithm, useDataInput } from './utils';
+import classes from './styles.module.scss';
 
 const App = () => {
   const {
     algorithm,
     algorithmIndex,
     handleChangeAlgorithm,
-    handleChangeAlgorithmIndex
+    handleChangeAlgorithmIndex,
   } = useAlgorithm();
   const {
     data,
@@ -21,7 +21,7 @@ const App = () => {
     generateRandom,
     handleChangeDataText,
     handleChangeLength,
-    length
+    length,
   } = useDataInput();
 
   return (
@@ -53,7 +53,7 @@ const App = () => {
               rows={6}
               value={dataText}
               onChange={handleChangeDataText}
-            ></textarea>
+            />
             <Button
               className={clsx(classes.textButton, classes.button)}
               onClick={generateFromText}

@@ -11,9 +11,9 @@ const radixSort: SortingAlgorithm = (list, _compare, _swap, assign) => {
     const counts = Array.from({ length: 10 }, () => 0);
     const output: number[] = [];
 
-    for (const value of list) {
-      ++counts[getKey(value)];
-    }
+    list.forEach(item => {
+      counts[getKey(item)] += 1;
+    });
 
     for (let i = 1; i < counts.length; ++i) {
       counts[i] += counts[i - 1];
@@ -23,7 +23,7 @@ const radixSort: SortingAlgorithm = (list, _compare, _swap, assign) => {
       const value = list[i];
       const key = getKey(value);
       output[counts[key] - 1] = list[i];
-      --counts[key];
+      counts[key] -= 1;
     }
 
     return output;

@@ -1,7 +1,7 @@
-import React, { forwardRef, HTMLAttributes } from "react";
-import clsx from "clsx";
-import { useNumberItemRef, NumberItemObject } from "./utils";
-import classes from "./styles.module.scss";
+import React, { forwardRef, HTMLAttributes } from 'react';
+import clsx from 'clsx';
+import { useNumberItemRef, NumberItemObject } from './utils';
+import classes from './styles.module.scss';
 
 const NumberItem = forwardRef<NumberItemObject, NumberItemProps>(
   ({ className, max, min, value }, ref) => {
@@ -12,16 +12,16 @@ const NumberItem = forwardRef<NumberItemObject, NumberItemProps>(
       <div
         className={clsx(classes.numberItem, className, {
           [classes.changed]: changed,
-          [classes.inspected]: inspected
+          [classes.inspected]: inspected,
         })}
         style={{ height: `${heightPercent}%` }}
         title={String(value)}
       />
     );
-  }
+  },
 );
 
-NumberItem.displayName = "NumberItem";
+NumberItem.displayName = 'NumberItem';
 
 export default NumberItem;
 

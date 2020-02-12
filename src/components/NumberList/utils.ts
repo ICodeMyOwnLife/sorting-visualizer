@@ -5,13 +5,13 @@ import {
   useMemo,
   useState,
   useEffect,
-  Key
-} from "react";
-import { NumberItemObject } from "components/NumberItem/utils";
+  Key,
+} from 'react';
+import { NumberItemObject } from 'components/NumberItem/utils';
 
 export const useNumberList = ({
   initialData,
-  ref
+  ref,
 }: {
   initialData: number[];
   ref: Ref<NumberListObject>;
@@ -22,9 +22,9 @@ export const useNumberList = ({
   const refs = useMemo(
     () =>
       Array.from({ length: initialData.length }, () =>
-        createRef<NumberItemObject>()
+        createRef<NumberItemObject>(),
       ),
-    [initialData]
+    [initialData],
   );
 
   useEffect(() => {
@@ -37,16 +37,15 @@ export const useNumberList = ({
       assign: async (index, value) => {
         setList(prevList =>
           prevList.map((item, idx) =>
-            idx === index ? { key: Date.now(), value } : item
-          )
+            idx === index ? { key: Date.now(), value } : item,
+          ),
         );
-        console.log("assigned");
         await refs[index].current?.markChanged();
       },
       compare: async (index1, index2) => {
         await Promise.all([
           refs[index1].current?.markInspected(),
-          refs[index2].current?.markInspected()
+          refs[index2].current?.markInspected(),
         ]);
       },
       swap: async (index1, index2) => {
@@ -56,17 +55,17 @@ export const useNumberList = ({
               ? prevList[index2]
               : index === index2
               ? prevList[index1]
-              : item
-          )
+              : item,
+          ),
         );
         await Promise.all([
           refs[index1].current?.markChanged(),
-          refs[index2].current?.markChanged()
+          refs[index2].current?.markChanged(),
         ]);
-      }
+      },
     }),
 
-    [refs]
+    [refs],
   );
 
   return { list, max, min, refs };

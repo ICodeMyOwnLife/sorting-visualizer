@@ -8,9 +8,9 @@ const mergeSort: SortingAlgorithm = (list, _compare, _swap, assign) => {
   const merge = (startIndex: number, middleIndex: number, endIndex: number) => {
     const leftArray = list.slice(startIndex, middleIndex + 1);
     const rightArray = list.slice(middleIndex + 1, endIndex + 1);
-    let leftIndex = 0,
-      rightIndex = 0,
-      index = startIndex;
+    let leftIndex = 0;
+    let rightIndex = 0;
+    let index = startIndex;
 
     for (
       ;
@@ -19,32 +19,32 @@ const mergeSort: SortingAlgorithm = (list, _compare, _swap, assign) => {
     ) {
       if (leftArray[leftIndex] < rightArray[rightIndex]) {
         assign(index, leftArray[leftIndex]);
-        ++leftIndex;
+        leftIndex += 1;
       } else {
         assign(index, rightArray[rightIndex]);
-        ++rightIndex;
+        rightIndex += 1;
       }
     }
 
-    for (; leftIndex < leftArray.length; ++leftIndex, ++index) {
+    for (; leftIndex < leftArray.length; leftIndex += 1, index += 1) {
       assign(index, leftArray[leftIndex]);
     }
 
-    for (; rightIndex < rightArray.length; ++rightIndex, ++index) {
+    for (; rightIndex < rightArray.length; rightIndex += 1, index += 1) {
       assign(index, rightArray[rightIndex]);
     }
   };
 
-  const mergeSort = (startIndex: number, endIndex: number) => {
+  const runMergeSort = (startIndex: number, endIndex: number) => {
     if (startIndex < endIndex) {
       const middleIndex = Math.trunc((startIndex + endIndex) / 2);
-      mergeSort(startIndex, middleIndex);
-      mergeSort(middleIndex + 1, endIndex);
+      runMergeSort(startIndex, middleIndex);
+      runMergeSort(middleIndex + 1, endIndex);
       merge(startIndex, middleIndex, endIndex);
     }
   };
 
-  mergeSort(0, list.length - 1);
+  runMergeSort(0, list.length - 1);
 };
 
 export default mergeSort;

@@ -12,7 +12,7 @@ type SortingAlgorithm = (
   list: readonly number[],
   compare: CompareFunction,
   swap: SwapFunction,
-  assign: AssignFunction
+  assign: AssignFunction,
 ) => void;
 
 interface AlgorithmInfo {
@@ -21,18 +21,18 @@ interface AlgorithmInfo {
 }
 
 type SortingStatus =
-  | "Pending"
-  | "Sorting"
-  | "Visualizing"
-  | "Complete"
-  | "Failed";
+  | 'Pending'
+  | 'Sorting'
+  | 'Visualizing'
+  | 'Complete'
+  | 'Failed';
 
 interface SortingRequest {
   func: string;
   list: number[];
 }
 
-type SortingOperation = "Compare" | "Swap" | "Assign";
+type SortingOperation = 'Compare' | 'Swap' | 'Assign';
 
 type SortingActionTuple = [SortingOperation, number, number];
 

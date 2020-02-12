@@ -1,10 +1,10 @@
-import React, { FC, memo, ReactElement } from "react";
-import classes from "./styles.module.scss";
+import React, { FC, memo, ReactElement } from 'react';
+import classes from './styles.module.scss';
 
 export const SpinComponent: FC<SpinProps> = ({
   children,
   loading,
-  size = 32
+  size = 32,
 }) =>
   loading ? (
     <div className={classes.wrapper}>
@@ -13,7 +13,7 @@ export const SpinComponent: FC<SpinProps> = ({
         <div
           className={classes.spinner}
           style={{ width: size, height: size }}
-        ></div>
+        />
       </div>
     </div>
   ) : (
@@ -21,7 +21,7 @@ export const SpinComponent: FC<SpinProps> = ({
   );
 
 const Spin = memo(SpinComponent);
-Spin.displayName = "Spin";
+Spin.displayName = 'Spin';
 export default Spin;
 
 export interface SpinProps {

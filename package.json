@@ -12,7 +12,10 @@
     "@types/react-dom": "^16.9.0",
     "ace-builds": "^1.4.8",
     "clsx": "^1.1.0",
+    "eslint-config-react-ts": "^1.1.0",
+    "husky": "^4.2.2",
     "node-sass": "^4.13.1",
+    "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-ace": "^8.0.0",
     "react-dom": "^16.12.0",
@@ -24,7 +27,10 @@
     "build": "react-scripts build",
     "build:workers": "tsc src/workers/*.ts --outDir public/workers --baseUrl src/",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "yarn lint --fix",
+    "type-check": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +45,21 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn type-check && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "yarn lint:fix",
+      "git add"
+    ],
+    "{*.{json,md}}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }

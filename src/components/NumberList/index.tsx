@@ -1,8 +1,8 @@
-import React, { forwardRef } from "react";
-import clsx from "clsx";
-import NumberItem from "components/NumberItem";
-import { NumberListObject, useNumberList } from "./utils";
-import classes from "./styles.module.scss";
+import React, { forwardRef } from 'react';
+import clsx from 'clsx';
+import NumberItem from 'components/NumberItem';
+import { NumberListObject, useNumberList } from './utils';
+import classes from './styles.module.scss';
 
 const NumberList = forwardRef<NumberListObject, NumberListProps>(
   ({ className, initialData }, ref) => {
@@ -21,10 +21,10 @@ const NumberList = forwardRef<NumberListObject, NumberListProps>(
         ))}
       </div>
     );
-  }
+  },
 );
 
-NumberList.displayName = "NumberList";
+NumberList.displayName = 'NumberList';
 
 export default NumberList;
 

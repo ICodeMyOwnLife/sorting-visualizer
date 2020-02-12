@@ -1,5 +1,5 @@
-import { useRef, useEffect, useCallback } from "react";
-import useDidMount from "./useDidMount";
+import { useRef, useEffect, useCallback } from 'react';
+import useDidMount from './useDidMount';
 
 const useTimeoutCallback = <TValue>(callback: () => TValue, ms: number) => {
   const callbackRef = useRef(callback);
@@ -28,7 +28,7 @@ const useTimeoutCallback = <TValue>(callback: () => TValue, ms: number) => {
         }, ms);
         timeoutRef.current = { handle, resolve };
       }),
-    [ms]
+    [ms],
   );
 
   return timeoutCallback;

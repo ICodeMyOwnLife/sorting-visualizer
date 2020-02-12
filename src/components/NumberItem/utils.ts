@@ -1,17 +1,17 @@
-import { useState, useImperativeHandle, Ref } from "react";
-import useTimeoutCallback from "hooks/useTimeoutCallback";
-import { ANIMATION_TIMEOUT } from "constants/common";
+import { useState, useImperativeHandle, Ref } from 'react';
+import useTimeoutCallback from 'hooks/useTimeoutCallback';
+import { ANIMATION_TIMEOUT } from 'constants/common';
 
 export const useNumberItemRef = ({ ref }: { ref: Ref<NumberItemObject> }) => {
   const [inspected, setInspected] = useState(false);
   const [changed, setChanged] = useState(false);
   const clearInspected = useTimeoutCallback(
     () => setInspected(false),
-    ANIMATION_TIMEOUT
+    ANIMATION_TIMEOUT,
   );
   const clearChanged = useTimeoutCallback(
     () => setChanged(false),
-    ANIMATION_TIMEOUT
+    ANIMATION_TIMEOUT,
   );
 
   useImperativeHandle(
@@ -24,9 +24,9 @@ export const useNumberItemRef = ({ ref }: { ref: Ref<NumberItemObject> }) => {
       markChanged: async () => {
         setChanged(true);
         await clearChanged();
-      }
+      },
     }),
-    [clearInspected, clearChanged]
+    [clearInspected, clearChanged],
   );
 
   return { inspected, changed };

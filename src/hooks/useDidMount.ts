@@ -1,4 +1,4 @@
-import useEffectOnce from "hooks/useEffectOnce";
+import useEffectOnce from 'hooks/useEffectOnce';
 
 const useDidMount = (callback: VoidFunction) =>
   useEffectOnce(() => {

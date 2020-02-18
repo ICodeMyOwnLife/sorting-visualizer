@@ -7,35 +7,31 @@ import classes from './styles.module.scss';
 
 export const SortingBoardComponent: FC<BoardProps> = ({ data, algorithm }) => {
   const {
+    loading,
     ref,
+    result,
     solve,
-    sortDuration,
-    status,
     visualizationDuration,
   } = useSortingBoard({ data, algorithm });
 
   return (
     <div className={classes.sortingBoard}>
-      <Spin loading={status === 'Sorting'}>
+      <Spin loading={loading}>
         <NumberList
           className={classes.numberList}
           initialData={data}
           ref={ref}
         />
       </Spin>
-      <Spin loading={status !== 'Pending'} size={16}>
-        <Button
-          className={classes.solveButton}
-          disabled={status !== 'Pending'}
-          onClick={solve}
-        >
+      <Spin loading={loading} size={16}>
+        <Button className={classes.solveButton} onClick={solve}>
           Solve
         </Button>
       </Spin>
       <p className={classes.results}>
-        {status === 'Failed' && <span>FAILED</span>}
-        {sortDuration !== undefined && (
-          <span>Sort Duration: {sortDuration}</span>
+        {result?.succeed === false && <span>FAILED</span>}
+        {result?.duration !== undefined && (
+          <span>Sort Duration: {result.duration}</span>
         )}
         {visualizationDuration !== undefined && (
           <span>Visualization Duration: {visualizationDuration}</span>

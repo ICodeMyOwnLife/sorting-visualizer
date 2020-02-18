@@ -2656,6 +2656,11 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
+cb-hooks@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cb-hooks/-/cb-hooks-1.0.1.tgz#6a969e72ab8116c733ba363dcf53aa7e4bda426c"
+  integrity sha512-DenSDS4KNADOhbpz61SBOsRifoiF0kcWPSDm+k6x85t6ArrRTcEODxJCTY4B4cr0rCygwmS8TlgRCW5G+RIwWw==
+
 chalk@3.0.0, chalk@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"

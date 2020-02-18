@@ -1,5 +1,5 @@
 import { useState, useImperativeHandle, Ref } from 'react';
-import useTimeoutCallback from 'hooks/useTimeoutCallback';
+import { useTimeoutCallback } from 'cb-hooks';
 import { ANIMATION_TIMEOUT } from 'constants/common';
 
 export const useNumberItemRef = ({ ref }: { ref: Ref<NumberItemObject> }) => {
